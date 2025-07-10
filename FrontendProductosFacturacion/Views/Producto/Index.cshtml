@@ -1,0 +1,40 @@
+﻿@model List<FrontendProductosFacturacion.Models.Producto>
+
+@{
+    ViewData["Title"] = "Lista de Productos";
+}
+
+<div class="container mt-3">
+    <h2 class=" Titulos mt-4">Lista de Productos</h2>
+
+    <a asp-action="Create" class="btn btn-success mb-3">Agregar Producto</a>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Código</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Codigo</td>
+                    <td>@item.PrecioUnitario</td>
+                    <td>@item.Descripcion</td>
+
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdProducto }, new { @class = "btn btn-sm btn-primary me-2" })
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdProducto }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

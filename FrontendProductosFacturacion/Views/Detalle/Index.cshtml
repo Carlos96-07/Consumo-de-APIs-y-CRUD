@@ -1,0 +1,43 @@
+﻿@model List<FrontendProductosFacturacion.Models.DetalleVenta>
+
+<h2 class="Titulos mt-4">Detalles de Venta</h2>
+
+<a asp-action="CrearDetalle" class="btn btn-success mb-3">Agregar Nuevo Detalle</a>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">No hay detalles de venta registrados.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+                <th>IVA</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model)
+            {
+                <tr>
+                    <td>@d.IdProducto</td>
+                    <td>@d.Cantidad</td>
+                    <td>@d.PrecioUnitario.ToString("C")</td>
+                    <td>@d.Subtotal.ToString("C")</td>
+                    <td>@(d.Impuesto ? "Sí" : "No")</td>
+                    <td>@d.Total.ToString("C")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@d.IdDetalle" class="btn btn-sm btn-warning">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@d.IdDetalle" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

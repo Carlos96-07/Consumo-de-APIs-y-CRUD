@@ -1,0 +1,31 @@
+﻿@model FrontendProductosFacturacion.Models.Producto
+
+@{
+    ViewData["Title"] = "Eliminar Producto";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4 class="text-danger">¿Estás seguro de que deseas eliminar este producto?</h4>
+
+<div class="mb-3">
+    <dl class="row">
+        <dt class="col-sm-2">Código</dt>
+        <dd class="col-sm-10">@Model.Codigo</dd>
+
+        <dt class="col-sm-2">Nombre</dt>
+        <dd class="col-sm-10">@Model.Nombre</dd>
+
+        <dt class="col-sm-2">Precio</dt>
+        <dd class="col-sm-10">@Model.PrecioUnitario.ToString("C")</dd>
+
+        <dt class="col-sm-2">Descripción</dt>
+        <dd class="col-sm-10">@Model.Descripcion</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="IdProducto " />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

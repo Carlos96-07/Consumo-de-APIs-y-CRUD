@@ -1,0 +1,158 @@
+﻿/* ======== Estilos Base ======== */
+body {
+    background-image: url('../img/FondoLg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Opcional: hace que la imagen no se desplace al hacer scroll */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+.auth-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+
+.auth-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.auth-button {
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 10px;
+}
+
+.input-group-text i {
+    font-size: 1.1rem;
+}
+
+.alert {
+    font-size: 0.95rem;
+}
+
+/* ======== Media Queries ======== */
+
+/* XS - Teléfonos pequeños (<576px) */
+@media (max-width: 575.98px) {
+    body {
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../img/img1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+    }
+
+    .auth-card {
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+
+    .auth-title {
+        font-size: 1.5rem;
+    }
+
+    .input-group-text i {
+        font-size: 1rem;
+    }
+
+    .auth-button {
+        padding: 0.6rem;
+        font-size: 0.95rem;
+    }
+
+    .alert {
+        font-size: 0.85rem;
+    }
+}
+
+/* SM - Teléfonos grandes (≥576px y <768px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    body {
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../img/img1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+    }
+
+    .auth-card {
+        padding: 1.75rem;
+    }
+
+    .auth-title {
+        font-size: 1.6rem;
+    }
+
+    .auth-button {
+        font-size: 1rem;
+    }
+}
+
+/* MD - Tablets (≥768px y <992px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    body {
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../img/img1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+    }
+
+    .auth-card {
+        padding: 2rem;
+        max-width: 450px;
+    }
+
+    .auth-title {
+        font-size: 1.75rem;
+    }
+}
+
+/* LG - Laptops (≥992px y <1200px) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    body {
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../img/img1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+    }
+
+    .auth-card {
+        max-width: 480px;
+    }
+}
+
+/* XL - Pantallas grandes (≥1200px) */
+@media (min-width: 1200px) {
+    .auth-card {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 360px) {
+    .auth-card {
+        padding: 1.2rem;
+    }
+
+    .auth-title {
+        font-size: 1.4rem;
+    }
+
+    .auth-button {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    .input-group-text i {
+        font-size: 0.9rem;
+    }
+}
+

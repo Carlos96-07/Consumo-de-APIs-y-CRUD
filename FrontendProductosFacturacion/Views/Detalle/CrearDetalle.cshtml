@@ -1,0 +1,149 @@
+﻿@model IEnumerable<FrontendProductosFacturacion.Models.Producto>
+
+<h2 class="Titulos mt-4">Productos Disponibles</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in Model)
+        {
+            <tr>
+                <td>@producto.Nombre</td>
+                <td>@producto.PrecioUnitario.ToString("N2")</td>
+                <td>@producto.Descripcion</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="agregarAlDetalle(@producto.IdProducto, '@producto.Nombre', @producto.PrecioUnitario)">Agregar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h3 class="Titulos">Detalle de Venta</h3>
+<table id="tablaDetalleVenta" class="table table-hover mt-3">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+            <th>Impuesto (13%)</th>
+            <th>Total</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody id="detalleVentaBody"></tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" class="text-end"><strong>Total General:</strong></td>
+            <td id="totalGeneral" class="fw-bold">₡0.00</td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+<button class="btn btn-success" id="btnGuardar">Guardar Detalles</button>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        var detallesVenta = [];
+        var productosLista = @Html.Raw(Json.Serialize(Model));
+
+        function agregarAlDetalle(idProducto, nombre, precioUnitario) {
+            var cantidadStr = prompt("Ingrese la cantidad para " + nombre + ":", "1");
+            if (cantidadStr !== null && !isNaN(cantidadStr) && parseFloat(cantidadStr) > 0) {
+                var cantidad = parseFloat(cantidadStr);
+                var subtotal = cantidad * precioUnitario;
+                var impuesto = true;
+                var total = impuesto ? subtotal * 1.13 : subtotal;
+
+                var detalle = {
+                    idProducto: idProducto,
+                    cantidad: cantidad,
+                    precioUnitario: precioUnitario,
+                    impuesto: impuesto,
+                    subtotal: subtotal,
+                    total: total
+                };
+
+                detallesVenta.push(detalle);
+                actualizarTablaDetalle();
+            } else if (cantidadStr !== null) {
+                alert("Por favor, ingrese una cantidad válida.");
+            }
+        }
+
+        function actualizarTablaDetalle() {
+            var $body = $("#detalleVentaBody");
+            $body.empty();
+
+            var totalGeneral = 0;
+
+            detallesVenta.forEach(function (detalle, index) {
+                var producto = productosLista.find(p => p.idProducto === detalle.idProducto);
+                var nombre = producto ? producto.nombre : "Desconocido";
+                var subtotal = detalle.precioUnitario * detalle.cantidad;
+                var total = detalle.impuesto ? subtotal * 1.13 : subtotal;
+                var impuestoMonto = detalle.impuesto ? subtotal * 0.13 : 0;
+
+                totalGeneral += total;
+
+                $body.append(`
+                    <tr>
+                        <td>${nombre}</td>
+                        <td>${detalle.cantidad}</td>
+                        <td>${detalle.precioUnitario.toFixed(2)}</td>
+                        <td>${subtotal.toFixed(2)}</td>
+                        <td>${impuestoMonto.toFixed(2)}</td>
+                        <td>${total.toFixed(2)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="eliminarDelDetalle(${index})">Eliminar</button>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            // Mostrar total general
+            $("#totalGeneral").text(`₡${totalGeneral.toFixed(2)}`);
+        }
+
+
+        function eliminarDelDetalle(index) {
+            detallesVenta.splice(index, 1);
+            actualizarTablaDetalle();
+        }
+
+        $("#btnGuardar").click(function () {
+            if (detallesVenta.length === 0) {
+                alert("Agregue al menos un producto.");
+                return;
+            }
+
+            $.ajax({
+                url: "http://localhost:5198/api/Detalleventums/Lista", // URL de tu API real
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(detallesVenta),
+                success: function (response) {
+                    alert("Detalles guardados correctamente.");
+                    window.location.href = '/Detalle/Index';
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error al guardar:", xhr.responseText);
+                    alert("Error al guardar los detalles.");
+                }
+            });
+        });
+    </script>
+}
