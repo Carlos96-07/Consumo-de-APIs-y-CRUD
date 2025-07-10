@@ -6,7 +6,7 @@ Este proyecto es una solución web completa que utiliza **.NET Core + Entity Fra
 
 ## Características del sistema
 
-### 🔙 Backend (.NET Core + EF Core - API REST)
+### Backend (.NET Core + EF Core - API REST)
 
 - Arquitectura por capas: `Controllers`, `Services`, `Repositories`, `Models`.
 - Exposición de endpoints REST para:
